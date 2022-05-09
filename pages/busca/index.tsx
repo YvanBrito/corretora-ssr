@@ -1,20 +1,31 @@
 import { ReactElement, useState } from "react";
 import Link from "next/link";
 import Layout from "../../components/Layout";
+import Card from "../../components/Card";
 
-export default function Search() {
-  const [test, setTest] = useState([
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-    "Rua",
-  ]);
+interface SearchProps {
+  imoveis: string[];
+}
+
+export async function getStaticProps() {
+  return {
+    props: {
+      imoveis: [
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+        "Rua",
+      ],
+    },
+  };
+}
+export default function Search({ imoveis }: SearchProps) {
   return (
     <div className="main-search-content-size">
       <section className="shelf-search">
@@ -31,29 +42,8 @@ export default function Search() {
           <button className="btn-filter">Filtrar</button>
         </div>
         <div className="shelf">
-          {test.map((t) => (
-            <div key={t} className="card">
-              <div className="card-details">
-                <h3>{t}</h3>
-                <span className="district">Nazaré, Belém</span>
-                <div className="card-details-basic-info">
-                  <span>
-                    <i className="fa fa-arrows-h" aria-hidden="true"></i>
-                    98 m<sup>2</sup>
-                  </span>
-                  <span>
-                    <i className="fa fa-bed" aria-hidden="true"></i>2 quartos
-                  </span>
-                </div>
-                <div className="card-details-price">
-                  <span>Aluguel</span>
-                  <span>R$ 1.400,00</span>
-                  <div className="card-details-price-total">
-                    Total R$ 1.553,00
-                  </div>
-                </div>
-              </div>
-            </div>
+          {imoveis.map((t, index) => (
+            <Card key={index} t={t} id={index} />
           ))}
         </div>
       </section>
