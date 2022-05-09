@@ -1,0 +1,27 @@
+.text-input {
+  width: 80%;
+  height: 2.5rem;
+  padding: 1rem;
+  border: 2px solid $bg-gray-200;
+  border-radius: 3rem;
+
+  &--home {
+    margin: 2rem 4rem;
+  }
+
+  &--search {
+    visibility: hidden;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .text-input {
+    width: 100%;
+
+    &--search {
+      visibility: visible;
+      width: 20%;
+      margin: 0;
+    }
+  }
+}
