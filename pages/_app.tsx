@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import "../styles/main.scss";
+import "../styles/vendors/font-awesome/font-awesome.min.css";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

@@ -2,6 +2,8 @@ import { ReactElement, useState } from "react";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
+import imagem from "../../assets/imovel.webp";
+import imagem2 from "../../assets/imovel2.webp";
 
 interface SearchProps {
   imoveis: string[];
@@ -42,8 +44,15 @@ export default function Search({ imoveis }: SearchProps) {
           <button className="btn-filter">Filtrar</button>
         </div>
         <div className="shelf">
-          {imoveis.map((t, index) => (
-            <Card key={index} t={t} id={index} />
+          {imoveis.map((streetName, index) => (
+            <Card
+              key={index}
+              streetName={streetName}
+              id={index}
+              imgPath={
+                Math.floor(Math.random() * 10) % 2 === 1 ? imagem : imagem2
+              }
+            />
           ))}
         </div>
       </section>

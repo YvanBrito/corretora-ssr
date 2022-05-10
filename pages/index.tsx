@@ -1,9 +1,10 @@
-import { FormEvent, ReactElement } from "react";
+import { FormEvent, ReactElement, useState } from "react";
 import type { NextPage } from "next";
 import Router from "next/router";
 import Layout from "../components/Layout";
 
 export default function Home() {
+  const [checked, setChecked] = useState<"buy" | "rent">("buy");
   const clickSubmit = (e: FormEvent) => {
     e.preventDefault();
     Router.push("/busca");
@@ -18,10 +19,11 @@ export default function Home() {
             <div>
               <input
                 type="radio"
-                checked
+                checked={checked === "buy"}
                 id="buy"
                 name="acquisitionType"
                 value="buy"
+                onChange={() => setChecked("buy")}
               />
               <label htmlFor="buy">Comprar</label>
               <br />
@@ -29,9 +31,11 @@ export default function Home() {
             <div>
               <input
                 type="radio"
+                checked={checked === "rent"}
                 id="rent"
                 name="acquisitionType"
                 value="rent"
+                onChange={() => setChecked("rent")}
               />
               <label htmlFor="rent">Alugar</label>
               <br />
