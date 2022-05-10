@@ -1,88 +1,54 @@
-import type { NextPage } from "next";
-import Link from "next/link";
+import fs from "fs";
 import { ReactElement } from "react";
 import Layout from "../../components/Layout";
+import { IProperty } from "../busca";
 
-interface EstateParams {
+interface PropertyParams {
   params: {
     id: string;
   };
 }
 
-interface EstateProps {
-  id: string;
-}
-
-export async function getStaticProps({ params }: EstateParams) {
-  return {
-    props: {
-      id: params.id,
-    },
-  };
+interface PropertyProps {
+  property: IProperty;
 }
 
 export async function getStaticPaths() {
+  let rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
+  let properties: IProperty[] = JSON.parse(rawdata);
+  const paths = properties.map(({ id }: IProperty) => ({
+    params: {
+      id: id.toString(),
+    },
+  }));
+
   return {
-    paths: [
-      {
-        params: {
-          id: "0",
-        },
-      },
-      {
-        params: {
-          id: "1",
-        },
-      },
-      {
-        params: {
-          id: "2",
-        },
-      },
-      {
-        params: {
-          id: "3",
-        },
-      },
-      {
-        params: {
-          id: "4",
-        },
-      },
-      {
-        params: {
-          id: "5",
-        },
-      },
-      {
-        params: {
-          id: "6",
-        },
-      },
-      {
-        params: {
-          id: "7",
-        },
-      },
-      {
-        params: {
-          id: "8",
-        },
-      },
-      {
-        params: {
-          id: "9",
-        },
-      },
-    ],
+    paths,
     fallback: false,
   };
 }
 
-export default function Estate({ id }: EstateProps) {
-  return <section className="main-section">{id}</section>;
+export async function getStaticProps({ params }: PropertyParams) {
+  let rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
+  let properties: IProperty[] = JSON.parse(rawdata);
+  const property = properties.find(
+    ({ id }: IProperty) => id.toString() === params.id
+  );
+  return {
+    props: {
+      property,
+    },
+  };
 }
 
-Estate.getLayout = function getLayout(page: ReactElement) {
+export default function Property({ property }: PropertyProps) {
+  return (
+    <section className="main-section">
+      {property.id} - {property.streetName}
+    </section>
+  );
+}
+
+Property.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
