@@ -1,6 +1,5 @@
 .main-search-content-size {
   display: flex;
-  height: calc(100vh - 13rem);
 }
 
 .shelf-search {
@@ -35,7 +34,7 @@
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 2rem;
   padding: 3rem;
-  height: 76%;
+  height: calc(100vh - 31.5rem);
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -46,6 +45,15 @@
 
 .map-side {
   display: none;
+}
+
+@media only screen and (max-height: 700px) {
+  .header-shelf-search {
+    display: none;
+  }
+  .shelf {
+    height: calc(100vh - 13rem);
+  }
 }
 
 @media only screen and (min-width: 700px) {

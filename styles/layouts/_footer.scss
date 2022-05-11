@@ -6,3 +6,9 @@
   background-color: $bg-gray-50;
   height: 6rem;
 }
+
+@media only screen and (max-height: 700px) {
+  .footer {
+    display: none;
+  }
+}
