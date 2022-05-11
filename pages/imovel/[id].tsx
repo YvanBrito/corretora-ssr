@@ -1,4 +1,5 @@
 import fs from "fs";
+import Head from "next/head";
 import { ReactElement } from "react";
 import Layout from "../../components/Layout";
 import { IProperty } from "../busca";
@@ -43,9 +44,14 @@ export async function getStaticProps({ params }: PropertyParams) {
 
 export default function Property({ property }: PropertyProps) {
   return (
-    <section className="main-section">
-      {property.id} - {property.streetName}
-    </section>
+    <>
+      <Head>
+        <title>Imóvel</title>
+      </Head>
+      <section className="main-section">
+        {property.id} - {property.streetName}
+      </section>
+    </>
   );
 }
 

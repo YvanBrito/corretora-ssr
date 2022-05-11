@@ -128,5 +128,57 @@
       "imovel.webp",
       "imovel2.webp"
     ]
+  },
+  {
+    "id": 5,
+    "createdAt": "2022-05-09T20:00:00",
+    "type": "Apartamento",
+    "isRent": true,
+    "streetName": "Rua dos Inocentes",
+    "district": "Nazaré",
+    "area": 34,
+    "longitude": 12323412,
+    "latitude": 523423,
+    "bedroomsQty": 3,
+    "bathroomQty": 1,
+    "rentPrice": 1234,
+    "buyPrice": 0,
+    "iptu": 0,
+    "condominiumPrice": 312,
+    "serviceRate": 32,
+    "isPetFriendly": true,
+    "furnished": false,
+    "floor": 3,
+    "carSpot": 1,
+    "images": [
+      "imovel.webp",
+      "imovel2.webp"
+    ]
+  },
+  {
+    "id": 6,
+    "createdAt": "2022-05-09T20:00:00",
+    "type": "Apartamento",
+    "isRent": true,
+    "streetName": "Rua dos Inocentes",
+    "district": "Nazaré",
+    "area": 34,
+    "longitude": 12323412,
+    "latitude": 523423,
+    "bedroomsQty": 3,
+    "bathroomQty": 1,
+    "rentPrice": 1234,
+    "buyPrice": 0,
+    "iptu": 0,
+    "condominiumPrice": 312,
+    "serviceRate": 32,
+    "isPetFriendly": true,
+    "furnished": false,
+    "floor": 3,
+    "carSpot": 1,
+    "images": [
+      "imovel.webp",
+      "imovel2.webp"
+    ]
   }
 ]

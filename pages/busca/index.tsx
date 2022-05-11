@@ -3,6 +3,8 @@ import fs from "fs";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
+import Modal from "../../components/Modal";
+import Head from "next/head";
 
 export interface IProperty {
   id: number;
@@ -41,29 +43,40 @@ export async function getStaticProps() {
   };
 }
 export default function Search({ properties }: SearchProps) {
+  const [showModal, setShowModal] = useState<boolean>(false);
   return (
-    <div className="main-search-content-size">
-      <section className="shelf-search">
-        <div className="header-shelf-search">
-          <nav>
-            <ul>
-              <li>
-                <Link href="/">Início</Link>
-              </li>
-              <li>&gt;</li>
-              <li>Belém, PA</li>
-            </ul>
-          </nav>
-          <button className="btn-filter">Filtrar</button>
-        </div>
-        <div className="shelf">
-          {properties.map((property, index) => (
-            <Card key={index} property={property} />
-          ))}
-        </div>
-      </section>
-      <section className="map-side"></section>
-    </div>
+    <>
+      <Head>
+        <title>Busca</title>
+      </Head>
+      <div className="main-search-content-size">
+        <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
+          <p>Teste</p>
+        </Modal>
+        <section className="shelf-search">
+          <div className="header-shelf-search">
+            <nav>
+              <ul>
+                <li>
+                  <Link href="/">Início</Link>
+                </li>
+                <li>&gt;</li>
+                <li>Belém, PA</li>
+              </ul>
+            </nav>
+            <button onClick={() => setShowModal(true)} className="btn-filter">
+              Filtrar
+            </button>
+          </div>
+          <div className="shelf">
+            {properties.map((property, index) => (
+              <Card key={index} property={property} />
+            ))}
+          </div>
+        </section>
+        <section className="map-side"></section>
+      </div>
+    </>
   );
 }
 
