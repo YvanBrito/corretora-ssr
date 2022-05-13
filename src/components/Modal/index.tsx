@@ -22,12 +22,17 @@ export default function Modal({
     setShowModal(openModal);
   }, [openModal]);
 
-  return showModal ? (
+  return (
     <>
-      <div className="filter-modal">{children}</div>
-      <div className="overlay" onClick={close}></div>
+      <div
+        className={`filter-modal ${showModal ? "slide-bottom" : "slide-top"}`}
+      >
+        {children}
+      </div>
+      <div
+        className={`overlay ${showModal ? "fade-in" : "fade-out"}`}
+        onClick={close}
+      ></div>
     </>
-  ) : (
-    <></>
   );
 }

@@ -47,6 +47,51 @@
   display: none;
 }
 
+.modal {
+  &-tabs {
+    input {
+      display: none;
+
+      &:checked + label {
+        background-color: $bg-gray-400;
+        color: black;
+      }
+    }
+
+    label {
+      display: inline-block;
+      text-align: center;
+      padding: 1rem 4rem;
+      color: $bg-gray-500;
+      font-weight: bold;
+      background-color: white;
+      transition: background-color 0.3s ease-in, color 0.3s ease-in;
+      border: 1px solid $bg-gray-400;
+      width: 10rem;
+      &:first-of-type {
+        border-top-left-radius: 2rem;
+        border-bottom-left-radius: 2rem;
+      }
+      &:last-of-type {
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+      }
+    }
+  }
+  &-wrapper {
+    margin: 2rem;
+
+    .filter-wrapper {
+      padding: 2rem 0;
+    }
+  }
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
 @media only screen and (max-height: 700px) {
   .header-shelf-search {
     display: none;
@@ -63,17 +108,19 @@
 }
 
 @media only screen and (min-width: 990px) {
+  .shelf-search {
+    width: 66%;
+  }
   .shelf {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .map-side {
+    display: block;
   }
 }
 
 @media only screen and (min-width: 1460px) {
-  .shelf-search {
-    width: 66%;
-  }
-
-  .map-side {
-    display: block;
+  .shelf {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

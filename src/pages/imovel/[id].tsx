@@ -46,7 +46,7 @@ export default function Property({ property }: PropertyProps) {
   return (
     <>
       <Head>
-        <title>Imóvel</title>
+        <title>Corretora - Imóvel</title>
       </Head>
       <section className="main-section">
         {property.id} - {property.streetName}

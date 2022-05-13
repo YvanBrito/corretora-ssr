@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Corretora</title>
+        <title>Corretora - Home</title>
       </Head>
       <section className="main-section">
         <div className="container">
@@ -73,7 +73,7 @@ export default function Home() {
                 name="location"
                 id="location"
               />
-              <button type="submit" className="btn">
+              <button type="submit" className="btn-primary">
                 Pesquisar
               </button>
             </div>
