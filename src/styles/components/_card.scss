@@ -35,7 +35,7 @@
 
     .district {
       display: inline-block;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       font-size: 1.3rem;
       color: $bg-gray-600;
     }
@@ -43,6 +43,15 @@
     &-bottom {
       padding: 0 1rem;
       margin-top: 1rem;
+
+      .property-type {
+        display: inline-block;
+        font-size: 1.3rem;
+        background-color: $bg-gray-300;
+        padding: 0.2rem 0.7rem;
+        border-radius: 0.5rem;
+        margin-bottom: 0.6rem;
+      }
     }
 
     &-basic-info {

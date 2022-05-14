@@ -23,6 +23,7 @@ export default function Card({ property }: CardProps) {
           height={200}
         />
         <div className="card-details-bottom">
+          <span className="property-type">{property.type}</span>
           <h3>{property.streetName}</h3>
           <span className="district">
             {property.district}, {property.city}

@@ -67,8 +67,15 @@ interface SearchProps {
 
 interface IFilterParams {
   acquisitionType: "rent" | "buy";
-  propertyType: "apartment" | "house";
+  propertyType: string[];
 }
+
+const typeMap: Map<string, string> = new Map([
+  ["house", "Casa"],
+  ["apartment", "Apartamento"],
+  ["kitnet", "Kitnet"],
+  ["condominium", "Casa de Condomínio"],
+]);
 
 export async function getStaticProps() {
   const rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
@@ -76,6 +83,7 @@ export async function getStaticProps() {
   const propertiesMapped: IPropertyMapped[] = properties.map(
     (p: IProperty) => ({
       ...p,
+      type: typeMap.get(p.type) || "",
       rentPrice: new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
@@ -109,28 +117,41 @@ export async function getStaticProps() {
   };
 }
 export default function Search({ propertiesMapped }: SearchProps) {
+  const [propertiesFiltered, setPropertiesFiltered] =
+    useState<IPropertyMapped[]>(propertiesMapped);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [filterParams, setFilterParams] = useState<IFilterParams>({
-    propertyType: "apartment",
+    propertyType: [],
     acquisitionType: "rent",
   });
 
-  const clickSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const formProps = Object.fromEntries(formData);
-    let queryString = Object.keys(formProps)
-      .map((key) => {
-        return (
-          encodeURIComponent(key) +
-          "=" +
-          encodeURIComponent(formProps[key].toString())
-        );
-      })
-      .join("&");
-    console.log(queryString);
+  const clickSubmit = () => {
+    const newPropertiesFiltered = propertiesMapped.filter(
+      (p) =>
+        filterParams.propertyType.filter(
+          (type: string) => p.type === typeMap.get(type)
+        ).length > 0
+    );
+    setPropertiesFiltered(newPropertiesFiltered);
     setShowModal(false);
     // Router.push(`/busca?${queryString}`);
+  };
+
+  const changePropertyType = (e: any) => {
+    let valueToBeSet: string[] = [];
+    setFilterParams((oldState) => {
+      if (oldState.propertyType.includes(e.target.value)) {
+        valueToBeSet = oldState.propertyType.filter(
+          (type) => type !== e.target.value
+        );
+      } else {
+        valueToBeSet = [...oldState.propertyType, e.target.value];
+      }
+      return {
+        ...oldState,
+        propertyType: valueToBeSet,
+      };
+    });
   };
 
   return (
@@ -140,7 +161,7 @@ export default function Search({ propertiesMapped }: SearchProps) {
       </Head>
       <div className="main-search-content-size">
         <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
-          <form onSubmit={clickSubmit} className="modal-wrapper">
+          <div className="modal-wrapper">
             <div className="modal-tabs">
               <input
                 type="radio"
@@ -176,50 +197,102 @@ export default function Search({ propertiesMapped }: SearchProps) {
               {filterParams.acquisitionType === "rent" ? (
                 <>
                   <div className="propertyType">
-                    <input
-                      type="radio"
-                      checked={filterParams.propertyType === "apartment"}
-                      id="apartment"
-                      name="propertyType"
-                      value="apartment"
-                      onChange={() =>
-                        setFilterParams((oldState) => ({
-                          ...oldState,
-                          propertyType: "apartment",
-                        }))
-                      }
-                    />
-                    <label htmlFor="apartment">Apartamento</label>
+                    <h3>Tipo de imóvel</h3>
+                    <div className="input-radio">
+                      <input
+                        type="radio"
+                        checked={filterParams.propertyType.includes(
+                          "apartment"
+                        )}
+                        id="apartment"
+                        value="apartment"
+                        onChange={() => ({})}
+                        onClick={changePropertyType}
+                      />
+                      <label htmlFor="apartment">Apartamento</label>
+                    </div>
 
-                    <input
-                      type="radio"
-                      checked={filterParams.propertyType === "house"}
-                      id="house"
-                      name="propertyType"
-                      value="house"
-                      onChange={() =>
-                        setFilterParams((oldState) => ({
-                          ...oldState,
-                          propertyType: "house",
-                        }))
-                      }
-                    />
-                    <label htmlFor="house">Casa</label>
+                    <div className="input-radio">
+                      <input
+                        type="radio"
+                        checked={filterParams.propertyType.includes("house")}
+                        id="house"
+                        value="house"
+                        onChange={() => ({})}
+                        onClick={changePropertyType}
+                      />
+                      <label htmlFor="house">Casa</label>
+                    </div>
+
+                    <div className="input-radio">
+                      <input
+                        type="radio"
+                        checked={filterParams.propertyType.includes(
+                          "condominium"
+                        )}
+                        id="condominium"
+                        value="condominium"
+                        onChange={() => ({})}
+                        onClick={changePropertyType}
+                      />
+                      <label htmlFor="condominium">Casa de Condomínio</label>
+                    </div>
+
+                    <div className="input-radio">
+                      <input
+                        type="radio"
+                        checked={filterParams.propertyType.includes("kitnet")}
+                        id="kitnet"
+                        value="kitnet"
+                        onChange={() => ({})}
+                        onClick={changePropertyType}
+                      />
+                      <label htmlFor="kitnet">Kitnet</label>
+                    </div>
                   </div>
                 </>
               ) : (
-                <div>Filtro Compra</div>
+                <>
+                  <div className="propertyType">
+                    <h3>Tipo de imóvel</h3>
+                    <div className="input-radio">
+                      <input
+                        type="radio"
+                        checked={filterParams.propertyType.includes(
+                          "apartment"
+                        )}
+                        id="apartment"
+                        name="propertyType"
+                        value="apartment"
+                        onChange={changePropertyType}
+                      />
+                      <label htmlFor="apartment">Apartamento</label>
+                    </div>
+
+                    <div className="input-radio">
+                      <input
+                        type="radio"
+                        checked={filterParams.propertyType.includes("house")}
+                        id="house"
+                        name="propertyType"
+                        value="house"
+                        onChange={changePropertyType}
+                      />
+                      <label htmlFor="house">Casa</label>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn-secondary">
                 Limpar filtros
               </button>
-              <button type="submit" className="btn-primary">
+              <button onClick={clickSubmit} className="btn-primary">
                 Filtrar
               </button>
             </div>
-          </form>
+          </div>
         </Modal>
         <section className="shelf-search">
           <div className="header-shelf-search">
@@ -237,7 +310,7 @@ export default function Search({ propertiesMapped }: SearchProps) {
             </button>
           </div>
           <div className="shelf">
-            {propertiesMapped?.map((property, index) => (
+            {propertiesFiltered?.map((property, index) => (
               <Card key={index} property={property} />
             ))}
           </div>
