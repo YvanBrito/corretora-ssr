@@ -84,4 +84,24 @@
       }
     }
   }
+
+  &-loading {
+    background: linear-gradient(45deg, #c5c5c5 20%, #dbdbdb 50%, #c5c5c5 80%);
+    background-size: 120rem 40rem;
+    animation: loading linear 1s infinite;
+    &:hover {
+      box-shadow: none;
+      transform: translateY(0px);
+      cursor: default;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: -600px 0px;
+  }
+  100% {
+    background-position: 600px 0px;
+  }
 }
