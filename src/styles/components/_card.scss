@@ -12,16 +12,8 @@
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-      0 8px 10px -6px rgb(0 0 0 / 0.1);
-    transform: translateY(-5px);
-  }
-
-  .imgCard {
-    // position: relative;
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.4),
+      0 8px 10px -6px rgb(0 0 0 / 0.4);
   }
 
   &-details {
@@ -38,7 +30,6 @@
     }
 
     &-top {
-      // background-color: $bg-gray-400;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
@@ -49,45 +40,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        .side {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 18rem;
-          width: 95%;
-          &-controllers {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 4rem;
-            width: 4rem;
-            border-radius: 2rem;
-            background-color: white;
-            &-left {
-              &::after {
-                content: "";
-                display: block;
-                width: 1rem;
-                height: 1rem;
-                border-bottom: 1px solid black;
-                border-left: 1px solid black;
-                transform: translateX(2px) rotate(45deg);
-              }
-            }
-            &-right {
-              &::after {
-                content: "";
-                display: block;
-                width: 1rem;
-                height: 1rem;
-                border-top: 1px solid black;
-                border-right: 1px solid black;
-                transform: translateX(-2px) rotate(45deg);
-              }
-            }
-          }
-        }
       }
       .circle {
         display: inline-block;

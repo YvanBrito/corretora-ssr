@@ -23,8 +23,13 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
-      "imovel.webp",
+      "imovel2.webp",
       "imovel2.webp",
       "imovel.webp",
       "imovel2.webp",
@@ -72,6 +77,11 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
       "imovel.webp",
       "imovel2.webp"
@@ -101,6 +111,11 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
       "imovel.webp",
       "imovel2.webp"
@@ -130,6 +145,11 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
       "imovel.webp",
       "imovel2.webp",
@@ -161,6 +181,11 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
       "imovel.webp",
       "imovel2.webp",
@@ -192,6 +217,11 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
       "imovel.webp",
       "imovel2.webp",
@@ -223,6 +253,11 @@
     "furnished": false,
     "floor": 3,
     "carSpot": 1,
+    "seller": {
+      "name": "Yvan Brito",
+      "phone": 91983756468,
+      "email": "teste@teste.com"
+    },
     "images": [
       "imovel.webp",
       "imovel2.webp",

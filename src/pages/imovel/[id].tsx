@@ -1,6 +1,7 @@
 import fs from "fs";
 import Head from "next/head";
-import { ReactElement } from "react";
+import Image from "next/image";
+import { ReactElement, useState } from "react";
 import Layout from "../../components/Layout";
 import { IProperty } from "../busca";
 
@@ -43,13 +44,57 @@ export async function getStaticProps({ params }: PropertyParams) {
 }
 
 export default function Property({ property }: PropertyProps) {
+  const [selectedImg, setSelectedImg] = useState<number>(0);
   return (
     <>
       <Head>
         <title>Corretora - Imóvel</title>
       </Head>
-      <section className="main-section">
-        {property.id} - {property.streetName}
+      <section className="imovel-section">
+        <div className="preview">
+          <div className="carousel">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImg((oldState) =>
+                  oldState > 0 ? --oldState : oldState
+                );
+              }}
+              className="side-controllers side-controllers-left"
+            ></div>
+            <div className="showcase">
+              <div
+                style={{
+                  transform: `translateX(${
+                    1920 / 3.5 + -(1920 / 5) * selectedImg
+                  }px)`,
+                }}
+                className="teste"
+              >
+                {property.images.map((img, index) => (
+                  <div
+                    key={img}
+                    className={`frame ${
+                      selectedImg === index && "frame-selected"
+                    }`}
+                  >
+                    <Image layout="fill" alt="image" src={`/assets/${img}`} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImg((oldState) =>
+                  oldState < property.images.length - 1 ? ++oldState : oldState
+                );
+              }}
+              className="side-controllers side-controllers-right"
+            ></div>
+          </div>
+        </div>
+        <div className="info"></div>
       </section>
     </>
   );
