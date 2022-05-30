@@ -65,15 +65,13 @@ export default function Property({ property }: PropertyProps) {
             <div className="showcase">
               <div
                 style={{
-                  transform: `translateX(${
-                    1920 / 3.5 + -(1920 / 5) * selectedImg
-                  }px)`,
+                  transform: `translateX(calc(${-34 * selectedImg}rem))`,
                 }}
                 className="teste"
               >
                 {property.images.map((img, index) => (
                   <div
-                    key={img}
+                    key={index}
                     className={`frame ${
                       selectedImg === index && "frame-selected"
                     }`}

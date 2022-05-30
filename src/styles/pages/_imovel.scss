@@ -20,18 +20,34 @@
   display: flex;
   align-items: center;
   transition: all 0.3s ease-in;
+  margin-left: calc(50% - 28rem);
 }
 
 .frame {
   object-fit: contain;
   position: relative;
-  // margin: 0 2rem;
+  margin: 0 2rem;
   transition: all 0.3s ease-in;
-  width: 33rem;
-  height: 19rem;
+  width: 30rem;
+  height: 20rem;
+  border-radius: 2rem;
+  overflow: hidden;
 
   &-selected {
-    width: 58rem;
-    height: 33rem;
+    width: 50rem;
+    height: 30rem;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .frame {
+    &-selected {
+      width: 30rem;
+      height: 20rem;
+    }
+  }
+
+  .teste {
+    margin-left: calc(50% - 17rem);
   }
 }
