@@ -39,6 +39,39 @@
   }
 }
 
+.bottom {
+  display: flex;
+  width: 100%;
+  padding: 2rem 0;
+  .content {
+    display: flex;
+    width: 70vw;
+    margin: 0 auto;
+    .info {
+      width: 70%;
+    }
+    .separator {
+      width: 100%;
+      border-top: solid 1px black;
+      margin: 2rem 0;
+    }
+    .actionCard {
+      width: 30%;
+      table {
+        width: 100%;
+        .tdRight {
+          float: right;
+        }
+        .tdTotal {
+          float: right;
+          font-size: 2rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 640px) {
   .frame {
     &-selected {

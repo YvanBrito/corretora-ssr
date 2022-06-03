@@ -92,7 +92,47 @@ export default function Property({ property }: PropertyProps) {
             ></div>
           </div>
         </div>
-        <div className="info"></div>
+        <div className="bottom">
+          <div className="content">
+            <div className="info">
+              <div className="btnPreviewGroup">
+                <button>360ª</button>
+                <button>Fotos</button>
+                <button>Mapa</button>
+              </div>
+            </div>
+            <div className="actionCard">
+              <h3>Imóvel concorrido</h3>
+              <span>Este imóvel tem altas chances de ser alugado logo</span>
+              <div className="separator"></div>
+              <table>
+                <tr>
+                  <td>Aluguel</td>
+                  <td className="tdRight">R$ 200,00</td>
+                </tr>
+                <tr>
+                  <td>Condomínio</td>
+                  <td className="tdRight">R$ 200,00</td>
+                </tr>
+                <tr>
+                  <td>IPTU</td>
+                  <td className="tdRight">R$ 200,00</td>
+                </tr>
+                <tr>
+                  <td>Seguro incêndio</td>
+                  <td className="tdRight">R$ 200,00</td>
+                </tr>
+              </table>
+              <div className="separator"></div>
+              <table>
+                <tr>
+                  <td>Total</td>
+                  <td className="tdTotal">R$ 800,00</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );
