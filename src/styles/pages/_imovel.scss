@@ -1,3 +1,43 @@
+.top {
+  margin: 5rem 0 1rem 0;
+  .content {
+    display: flex;
+    width: 70vw;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      display: flex;
+      flex-direction: column;
+      .main {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+    }
+    .priceBtn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.1s ease-in;
+      &:hover {
+        cursor: pointer;
+        background-color: $bg-gray-200;
+      }
+      &:active {
+        background-color: $bg-gray-300;
+      }
+      .price {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      .triangle {
+        margin: 0.5rem 0 0 1rem;
+      }
+    }
+  }
+}
+
 .preview {
   background-color: $bg-gray-300;
 }
@@ -16,7 +56,7 @@
   overflow: hidden;
 }
 
-.teste {
+.esteira {
   display: flex;
   align-items: center;
   transition: all 0.3s ease-in;
@@ -39,40 +79,64 @@
   }
 }
 
+.actionCard {
+  margin: 2rem 3rem;
+  .separator {
+    width: 100%;
+    border-top: solid 1px black;
+    margin: 2rem 0;
+  }
+  table {
+    width: 100%;
+    .tdRight {
+      float: right;
+    }
+    .tdTotal {
+      float: right;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  }
+}
+
 .bottom {
   display: flex;
   width: 100%;
   padding: 2rem 0;
   .content {
-    display: flex;
     width: 70vw;
     margin: 0 auto;
-    .info {
-      width: 70%;
-    }
-    .separator {
-      width: 100%;
-      border-top: solid 1px black;
-      margin: 2rem 0;
-    }
-    .actionCard {
-      width: 30%;
-      table {
-        width: 100%;
-        .tdRight {
-          float: right;
-        }
-        .tdTotal {
-          float: right;
-          font-size: 2rem;
-          font-weight: bold;
-        }
+
+    .details {
+      display: flex;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      .detail {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 1rem;
+        background-color: $bg-gray-200;
+        width: 8rem;
+        height: 8rem;
+        border-radius: 1rem;
       }
     }
   }
 }
 
 @media only screen and (max-width: 640px) {
+  .top {
+    .content {
+      flex-direction: column;
+      align-items: flex-start;
+      .priceBtn {
+        padding: 0;
+        margin-top: 1rem;
+      }
+    }
+  }
   .frame {
     &-selected {
       width: 30rem;
@@ -80,7 +144,7 @@
     }
   }
 
-  .teste {
+  .esteira {
     margin-left: calc(50% - 17rem);
   }
 }

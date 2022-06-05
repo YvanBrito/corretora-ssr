@@ -1,22 +1,27 @@
-import { FormEvent, ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import fs from "fs";
 import Link from "next/link";
+import Head from "next/head";
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
 import Modal from "../../components/Modal";
-import Head from "next/head";
 import LoadingCard from "../../components/LoadingCard";
+import { propertyMapper, typeMap } from "../../utils/propertyMapper";
 
 export interface IProperty {
   id: number;
   createdAt: string;
   type: string;
   isRent: true;
-  streetName: string;
-  district: string;
-  city: string;
-  state: string;
-  stateInitials: string;
+  address: {
+    streetName: string;
+    number: string;
+    district: string;
+    city: string;
+    state: string;
+    stateInitials: string;
+  };
+  description: string;
   area: number;
   longitude: number;
   latitude: number;
@@ -39,11 +44,15 @@ export interface IPropertyMapped {
   createdAt: string;
   type: string;
   isRent: true;
-  streetName: string;
-  district: string;
-  city: string;
-  state: string;
-  stateInitials: string;
+  address: {
+    streetName: string;
+    number: string;
+    district: string;
+    city: string;
+    state: string;
+    stateInitials: string;
+  };
+  description: string;
   area: number;
   longitude: number;
   latitude: number;
@@ -71,13 +80,6 @@ interface IFilterParams {
   propertyType: string[];
 }
 
-const typeMap: Map<string, string> = new Map([
-  ["apartment", "Apartamento"],
-  ["house", "Casa"],
-  ["condominium", "Casa de Condomínio"],
-  ["kitnet", "Kitnet"],
-]);
-
 const defaultParams: IFilterParams = {
   acquisitionType: "rent",
   propertyType: [],
@@ -86,36 +88,7 @@ const defaultParams: IFilterParams = {
 export async function getStaticProps() {
   const rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
   const properties: IProperty[] = JSON.parse(rawdata);
-  const propertiesMapped: IPropertyMapped[] = properties.map(
-    (p: IProperty) => ({
-      ...p,
-      type: typeMap.get(p.type) || "",
-      rentPrice: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(p.rentPrice),
-      buyPrice: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(p.buyPrice),
-      iptu: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(p.iptu),
-      serviceRate: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(p.serviceRate),
-      condominiumPrice: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(p.condominiumPrice),
-      totalPrice: new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(p.rentPrice + p.serviceRate + p.iptu + p.condominiumPrice),
-    })
-  );
+  const propertiesMapped: IPropertyMapped[] = propertyMapper(properties);
   return {
     props: {
       propertiesMapped,
@@ -303,10 +276,6 @@ export default function Search({ propertiesMapped }: SearchProps) {
                 ))}
               </>
             )}
-
-            {/* {propertiesFiltered?.map((property, index) => (
-              <Card key={index} property={property} />
-            ))} */}
           </div>
         </section>
         <section className="map-side"></section>

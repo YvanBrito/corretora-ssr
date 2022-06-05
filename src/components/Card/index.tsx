@@ -14,11 +14,15 @@ export default function Card({ property }: CardProps) {
   };
 
   return (
-    <div onClick={clickSubmit} key={property.streetName} className="card">
+    <div
+      onClick={clickSubmit}
+      key={property.address.streetName}
+      className="card"
+    >
       <div className="card-details">
         <div
           style={{
-            backgroundImage: `url("/assets/${property.images[imgSelected]}")`,
+            backgroundImage: `url("/assets/imoveis/${property.images[imgSelected]}")`,
           }}
           className="card-details-top"
         >
@@ -66,9 +70,9 @@ export default function Card({ property }: CardProps) {
         </div>
         <div className="card-details-bottom">
           <span className="property-type">{property.type}</span>
-          <h3>{property.streetName}</h3>
+          <h3>{property.address.streetName}</h3>
           <span className="district">
-            {property.district}, {property.city}
+            {property.address.district}, {property.address.city}
           </span>
           <div className="card-details-basic-info">
             <span>

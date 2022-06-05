@@ -2,8 +2,11 @@ import fs from "fs";
 import Head from "next/head";
 import Image from "next/image";
 import { ReactElement, useState } from "react";
+import Carousel from "../../components/Carousel";
 import Layout from "../../components/Layout";
-import { IProperty } from "../busca";
+import Modal from "../../components/Modal";
+import { propertyMapper } from "../../utils/propertyMapper";
+import { IProperty, IPropertyMapped } from "../busca";
 
 interface PropertyParams {
   params: {
@@ -12,7 +15,7 @@ interface PropertyParams {
 }
 
 interface PropertyProps {
-  property: IProperty;
+  property: IPropertyMapped;
 }
 
 export async function getStaticPaths() {
@@ -33,8 +36,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: PropertyParams) {
   let rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
   let properties: IProperty[] = JSON.parse(rawdata);
-  const property = properties.find(
-    ({ id }: IProperty) => id.toString() === params.id
+  const propertiesMapped: IPropertyMapped[] = propertyMapper(properties);
+  const property = propertiesMapped.find(
+    ({ id }: IPropertyMapped) => id.toString() === params.id
   );
   return {
     props: {
@@ -44,92 +48,112 @@ export async function getStaticProps({ params }: PropertyParams) {
 }
 
 export default function Property({ property }: PropertyProps) {
-  const [selectedImg, setSelectedImg] = useState<number>(0);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [preview, setPreview] = useState<number>(0);
+
+  const previewToRender = () => {
+    console.log(preview);
+    switch (preview) {
+      case 0:
+        return <Carousel images={property.images} />;
+      case 1:
+        return <div>360°</div>;
+      case 2:
+        return <div>Mapa</div>;
+      default:
+        return <div>Undefined</div>;
+    }
+  };
+
   return (
     <>
       <Head>
         <title>Corretora - Imóvel</title>
       </Head>
+      <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
+        <div className="actionCard">
+          <h3>Imóvel concorrido</h3>
+          <span>Este imóvel tem altas chances de ser alugado logo</span>
+          <div className="separator"></div>
+          <table>
+            <tbody>
+              <tr>
+                <td>Aluguel</td>
+                <td className="tdRight">{property.rentPrice}</td>
+              </tr>
+              <tr>
+                <td>Condomínio</td>
+                <td className="tdRight">{property.condominiumPrice}</td>
+              </tr>
+              <tr>
+                <td>IPTU</td>
+                <td className="tdRight">{property.iptu}</td>
+              </tr>
+              <tr>
+                <td>Taxa de serviço</td>
+                <td className="tdRight">{property.serviceRate}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="separator"></div>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total</td>
+                <td className="tdTotal">{property.totalPrice}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Modal>
       <section className="imovel-section">
-        <div className="preview">
-          <div className="carousel">
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImg((oldState) =>
-                  oldState > 0 ? --oldState : oldState
-                );
-              }}
-              className="side-controllers side-controllers-left"
-            ></div>
-            <div className="showcase">
-              <div
-                style={{
-                  transform: `translateX(calc(${-34 * selectedImg}rem))`,
-                }}
-                className="teste"
-              >
-                {property.images.map((img, index) => (
-                  <div
-                    key={index}
-                    className={`frame ${
-                      selectedImg === index && "frame-selected"
-                    }`}
-                  >
-                    <Image layout="fill" alt="image" src={`/assets/${img}`} />
-                  </div>
-                ))}
+        <div className="top">
+          <div className="content">
+            <div className="title">
+              <span className="main">
+                {property.address.streetName}, {property.address.number}{" "}
+              </span>
+              <span className="subtitle">
+                {property.address.district}, {property.address.city} -{" "}
+                {property.address.stateInitials}
+              </span>
+            </div>
+            <div className="priceBtn" onClick={() => setShowModal(true)}>
+              <span className="price">{property.totalPrice}</span>
+              <div className="triangle">
+                <Image
+                  width={15}
+                  height={15}
+                  alt="image"
+                  src={"/assets/icons/icon-question-64.png"}
+                />
               </div>
             </div>
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImg((oldState) =>
-                  oldState < property.images.length - 1 ? ++oldState : oldState
-                );
-              }}
-              className="side-controllers side-controllers-right"
-            ></div>
           </div>
         </div>
+        <div className="preview">{previewToRender()}</div>
         <div className="bottom">
           <div className="content">
-            <div className="info">
-              <div className="btnPreviewGroup">
-                <button>360ª</button>
-                <button>Fotos</button>
-                <button>Mapa</button>
+            <div className="btnPreviewGroup">
+              <button onClick={() => setPreview(0)}>Fotos</button>
+              <button onClick={() => setPreview(1)}>360°</button>
+              <button onClick={() => setPreview(2)}>Mapa</button>
+            </div>
+            <div className="details">
+              <div className="detail">
+                <i className="fa fa-bed" aria-hidden="true"></i>
+                <span>{property.bedroomsQty} quartos</span>
+              </div>
+              <div className="detail">
+                <i className="fa fa-arrows-h" aria-hidden="true"></i>
+                <span>
+                  {property.area} m<sup>2</sup>
+                </span>
               </div>
             </div>
-            <div className="actionCard">
-              <h3>Imóvel concorrido</h3>
-              <span>Este imóvel tem altas chances de ser alugado logo</span>
-              <div className="separator"></div>
-              <table>
-                <tr>
-                  <td>Aluguel</td>
-                  <td className="tdRight">R$ 200,00</td>
-                </tr>
-                <tr>
-                  <td>Condomínio</td>
-                  <td className="tdRight">R$ 200,00</td>
-                </tr>
-                <tr>
-                  <td>IPTU</td>
-                  <td className="tdRight">R$ 200,00</td>
-                </tr>
-                <tr>
-                  <td>Seguro incêndio</td>
-                  <td className="tdRight">R$ 200,00</td>
-                </tr>
-              </table>
-              <div className="separator"></div>
-              <table>
-                <tr>
-                  <td>Total</td>
-                  <td className="tdTotal">R$ 800,00</td>
-                </tr>
-              </table>
+            <div className="info">
+              <h1>Descrição</h1>
+              <p>{property.description}</p>
             </div>
           </div>
         </div>
