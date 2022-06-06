@@ -36,6 +36,11 @@ export interface IProperty {
   furnished: boolean;
   floor: number;
   carSpot: number;
+  seller: {
+    name: string;
+    phone: number;
+    email: string;
+  };
   images: string[];
 }
 
@@ -68,6 +73,11 @@ export interface IPropertyMapped {
   furnished: boolean;
   floor: number;
   carSpot: number;
+  seller: {
+    name: string;
+    phone: number;
+    email: string;
+  };
   images: string[];
 }
 
