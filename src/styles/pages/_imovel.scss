@@ -49,6 +49,11 @@
   justify-content: space-between;
   padding: 2rem;
 }
+@media only screen and (max-height: 750px) {
+  .carousel {
+    height: 50vh;
+  }
+}
 
 .showcase {
   width: 90%;
@@ -131,13 +136,14 @@
       }
       .details {
         display: flex;
-        margin: 1rem 0;
+        flex-wrap: wrap;
+        margin: 1rem auto;
         .detail {
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          margin: 0 1rem;
+          margin: 1rem 1rem;
           background-color: $bg-gray-200;
           width: 8rem;
           height: 8rem;

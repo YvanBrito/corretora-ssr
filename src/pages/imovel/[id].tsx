@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as Icon from "@fortawesome/free-solid-svg-icons";
 import fs from "fs";
 import Head from "next/head";
 import Image from "next/image";
@@ -7,6 +9,7 @@ import Layout from "../../components/Layout";
 import Modal from "../../components/Modal";
 import { propertyMapper } from "../../utils/propertyMapper";
 import { IProperty, IPropertyMapped } from "../busca";
+import ImmersiveCam from "../../components/ImmersiveCam";
 
 interface PropertyParams {
   params: {
@@ -57,7 +60,11 @@ export default function Property({ property }: PropertyProps) {
       case 0:
         return <Carousel images={property.images} />;
       case 1:
-        return <div>360°</div>;
+        return (
+          <div>
+            <ImmersiveCam />
+          </div>
+        );
       case 2:
         return <div>Mapa</div>;
       default:
@@ -66,7 +73,6 @@ export default function Property({ property }: PropertyProps) {
   };
 
   useEffect(() => {
-    const ua = navigator.userAgent;
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
         navigator.userAgent || navigator.vendor
@@ -158,15 +164,52 @@ export default function Property({ property }: PropertyProps) {
             <div className="top-description">
               <div className="details">
                 <div className="detail">
-                  <i className="fa fa-bed" aria-hidden="true"></i>
+                  <FontAwesomeIcon width={20} icon={Icon.faBed} />
                   <span>{property.bedroomsQty} quartos</span>
                 </div>
                 <div className="detail">
-                  <i className="fa fa-arrows-h" aria-hidden="true"></i>
+                  <FontAwesomeIcon width={18} icon={Icon.faRuler} />
                   <span>
                     {property.area} m<sup>2</sup>
                   </span>
                 </div>
+                <div className="detail">
+                  <FontAwesomeIcon width={20} icon={Icon.faShower} />
+                  <span>
+                    {property.bathroomQty}{" "}
+                    {property.bathroomQty > 1 ? "banheiros" : "banheiro"}
+                  </span>
+                </div>
+                {property.isPetFriendly && (
+                  <div className="detail">
+                    <FontAwesomeIcon width={20} icon={Icon.faPaw} />
+                    <span>Aceita pet</span>
+                  </div>
+                )}
+                {property.furnished && (
+                  <div className="detail">
+                    <FontAwesomeIcon width={20} icon={Icon.faCouch} />
+                    <span>Mobiliada</span>
+                  </div>
+                )}
+                {property.carSpot > 0 && (
+                  <div className="detail">
+                    <FontAwesomeIcon width={20} icon={Icon.faCar} />
+                    <span>
+                      {property.carSpot}{" "}
+                      {property.carSpot > 1 ? "vagas" : "vaga"}
+                    </span>
+                  </div>
+                )}
+                {property.floor > 0 && (
+                  <div className="detail">
+                    <FontAwesomeIcon width={20} icon={Icon.faHouse} />
+                    <span>
+                      {property.floor}{" "}
+                      {property.floor > 1 ? "andar" : "andares"}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="call-to-action">
                 <a
