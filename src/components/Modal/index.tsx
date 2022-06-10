@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 
 interface ModalProps {
   children: ReactNode;
@@ -18,8 +18,19 @@ export default function Modal({
     handleClose();
   };
 
+  const escFunction = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      close();
+    }
+  }, []);
+
   useEffect(() => {
     setShowModal(openModal);
+    document.addEventListener("keydown", escFunction, false);
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
   }, [openModal]);
 
   return (

@@ -1,3 +1,14 @@
+.close-immersive {
+  position: absolute;
+  z-index: 1;
+  right: 2rem;
+}
+@media only screen and (max-height: 750px) {
+  .close-immersive {
+    top: 2rem;
+  }
+}
+
 .top {
   margin: 5rem 0 1rem 0;
   .content {

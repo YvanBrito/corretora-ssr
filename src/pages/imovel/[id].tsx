@@ -52,6 +52,7 @@ export async function getStaticProps({ params }: PropertyParams) {
 
 export default function Property({ property }: PropertyProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showImmersiveCam, setShowImmersiveCam] = useState<boolean>(false);
   const [preview, setPreview] = useState<number>(0);
   const [whatsappLink, setWhatsappLink] = useState<string>("");
 
@@ -60,11 +61,7 @@ export default function Property({ property }: PropertyProps) {
       case 0:
         return <Carousel images={property.images} />;
       case 1:
-        return (
-          <div>
-            <ImmersiveCam />
-          </div>
-        );
+        return <div>Teste</div>;
       case 2:
         return <div>Mapa</div>;
       default:
@@ -92,6 +89,18 @@ export default function Property({ property }: PropertyProps) {
       <Head>
         <title>Corretora - Imóvel</title>
       </Head>
+      <Modal
+        openModal={showImmersiveCam}
+        handleClose={() => setShowImmersiveCam(false)}
+      >
+        <button
+          className="close-immersive"
+          onClick={() => setShowImmersiveCam(false)}
+        >
+          Fechar
+        </button>
+        <ImmersiveCam />
+      </Modal>
       <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
         <div className="actionCard">
           <h3>Imóvel concorrido</h3>
@@ -158,7 +167,7 @@ export default function Property({ property }: PropertyProps) {
           <div className="content">
             <div className="btn-preview-group">
               <button onClick={() => setPreview(0)}>Fotos</button>
-              <button onClick={() => setPreview(1)}>360°</button>
+              <button onClick={() => setShowImmersiveCam(true)}>360°</button>
               <button onClick={() => setPreview(2)}>Mapa</button>
             </div>
             <div className="top-description">
@@ -206,7 +215,7 @@ export default function Property({ property }: PropertyProps) {
                     <FontAwesomeIcon width={20} icon={Icon.faHouse} />
                     <span>
                       {property.floor}{" "}
-                      {property.floor > 1 ? "andar" : "andares"}
+                      {property.floor > 1 ? "andares" : "andar"}
                     </span>
                   </div>
                 )}
