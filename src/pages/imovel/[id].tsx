@@ -10,6 +10,8 @@ import Modal from "../../components/Modal";
 import { propertyMapper } from "../../utils/propertyMapper";
 import { IProperty, IPropertyMapped } from "../busca";
 import ImmersiveCam from "../../components/ImmersiveCam";
+import Map from "../../components/Map";
+import { Marker } from "@react-google-maps/api";
 
 interface PropertyParams {
   params: {
@@ -63,7 +65,11 @@ export default function Property({ property }: PropertyProps) {
       case 1:
         return <div>Teste</div>;
       case 2:
-        return <div>Mapa</div>;
+        return (
+          <Map lat={property.lat} lng={property.lng}>
+            <Marker position={{ lat: property.lat, lng: property.lng }} />
+          </Map>
+        );
       default:
         return <div>Undefined</div>;
     }

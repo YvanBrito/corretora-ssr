@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import { ReactNode } from "react";
 import Head from "next/head";
 import MyFooter from "../Footer";
@@ -9,6 +10,7 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <Head>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEtW0PTowEOEdwSD-FwodQ0Ig_l_-Jt4c&libraries=places&callback=initMap"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

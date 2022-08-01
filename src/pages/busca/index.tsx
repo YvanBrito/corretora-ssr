@@ -2,11 +2,14 @@ import { ReactElement, useEffect, useState } from "react";
 import fs from "fs";
 import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import LoadingCard from "../../components/LoadingCard";
+import Map from "../../components/Map";
 import { propertyMapper, typeMap } from "../../utils/propertyMapper";
+import { Marker } from "@react-google-maps/api";
 
 export interface IProperty {
   id: number;
@@ -23,8 +26,8 @@ export interface IProperty {
   };
   description: string;
   area: number;
-  longitude: number;
-  latitude: number;
+  lng: number;
+  lat: number;
   bedroomsQty: number;
   bathroomQty: number;
   rentPrice: number;
@@ -59,8 +62,8 @@ export interface IPropertyMapped {
   };
   description: string;
   area: number;
-  longitude: number;
-  latitude: number;
+  lng: number;
+  lat: number;
   bedroomsQty: number;
   bathroomQty: number;
   rentPrice: string;
@@ -95,6 +98,11 @@ const defaultParams: IFilterParams = {
   propertyType: [],
 };
 
+interface IPosition {
+  lat: number;
+  lng: number;
+}
+
 export async function getStaticProps() {
   const rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
   const properties: IProperty[] = JSON.parse(rawdata);
@@ -106,6 +114,7 @@ export async function getStaticProps() {
   };
 }
 export default function Search({ propertiesMapped }: SearchProps) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [propertiesFiltered, setPropertiesFiltered] = useState<
     IPropertyMapped[]
@@ -113,6 +122,10 @@ export default function Search({ propertiesMapped }: SearchProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [filterParams, setFilterParams] =
     useState<IFilterParams>(defaultParams);
+  const [center, setCenter] = useState<IPosition>({
+    lat: Number(router.query.lat || 0),
+    lng: Number(router.query.lng || 0),
+  });
 
   const clickSubmit = () => {
     setShowModal(false);
@@ -262,7 +275,7 @@ export default function Search({ propertiesMapped }: SearchProps) {
                   <Link href="/">Início</Link>
                 </li>
                 <li>&gt;</li>
-                <li>Belém, PA</li>
+                <li>{router.query.location}</li>
               </ul>
             </nav>
             <button onClick={() => setShowModal(true)} className="btn-filter">
@@ -288,7 +301,18 @@ export default function Search({ propertiesMapped }: SearchProps) {
             )}
           </div>
         </section>
-        <section className="map-side"></section>
+        <section className="map-side">
+          <Map center={center} getBounds={(bounds) => console.log(bounds)}>
+            <>
+              {propertiesFiltered?.map((property, index) => (
+                <Marker
+                  key={index}
+                  position={{ lat: property.lat, lng: property.lng }}
+                />
+              ))}
+            </>
+          </Map>
+        </section>
       </div>
     </>
   );

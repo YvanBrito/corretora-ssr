@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -13,17 +14,20 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@react-google-maps/api": "^2.12.1",
     "@react-three/fiber": "^8.0.22",
     "@types/three": "^0.141.0",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-places-autocomplete": "^7.3.0",
     "three": "^0.141.0"
   },
   "devDependencies": {
     "@types/node": "17.0.31",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.3",
+    "@types/react-places-autocomplete": "^7.2.9",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
     "sass": "^1.51.0",
