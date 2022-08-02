@@ -7,9 +7,9 @@ import Layout from "../../components/Layout";
 import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import LoadingCard from "../../components/LoadingCard";
-import Map from "../../components/Map";
+import Map, { IBounds } from "../../components/Map";
 import { propertyMapper, typeMap } from "../../utils/propertyMapper";
-import { Marker } from "@react-google-maps/api";
+import { Marker, MarkerClusterer } from "@react-google-maps/api";
 
 export interface IProperty {
   id: number;
@@ -146,6 +146,23 @@ export default function Search({ propertiesMapped }: SearchProps) {
       setIsLoading(false);
     }, 2000);
     // Router.push(`/busca?${queryString}`);
+  };
+  const onChangeMapBounds = ({ sw, ne }: IBounds) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      const newPropertiesFiltered = propertiesMapped.filter((p) => {
+        if (
+          p.lat > (sw.lat || -Infinity) &&
+          p.lat < (ne.lat || Infinity) &&
+          p.lng > (sw.lng || -Infinity) &&
+          p.lng < (ne.lng || Infinity)
+        ) {
+          return p;
+        }
+      });
+      setPropertiesFiltered(newPropertiesFiltered);
+      setIsLoading(false);
+    }, 2000);
   };
 
   const changePropertyType = (e: any) => {
@@ -302,14 +319,32 @@ export default function Search({ propertiesMapped }: SearchProps) {
           </div>
         </section>
         <section className="map-side">
-          <Map center={center} getBounds={(bounds) => console.log(bounds)}>
+          <Map center={center} getBounds={onChangeMapBounds}>
             <>
-              {propertiesFiltered?.map((property, index) => (
+              <MarkerClusterer
+                options={{
+                  imagePath:
+                    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m", // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
+                }}
+              >
+                {(clusterer) => (
+                  <>
+                    {propertiesFiltered.map((p, index) => (
+                      <Marker
+                        key={index}
+                        position={{ lat: p.lat, lng: p.lng }}
+                        clusterer={clusterer}
+                      />
+                    ))}
+                  </>
+                )}
+              </MarkerClusterer>
+              {/* {propertiesFiltered?.map((property, index) => (
                 <Marker
                   key={index}
                   position={{ lat: property.lat, lng: property.lng }}
                 />
-              ))}
+              ))} */}
             </>
           </Map>
         </section>

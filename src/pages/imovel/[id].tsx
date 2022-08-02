@@ -66,7 +66,7 @@ export default function Property({ property }: PropertyProps) {
         return <div>Teste</div>;
       case 2:
         return (
-          <Map lat={property.lat} lng={property.lng}>
+          <Map center={{ lat: property.lat, lng: property.lng }}>
             <Marker position={{ lat: property.lat, lng: property.lng }} />
           </Map>
         );

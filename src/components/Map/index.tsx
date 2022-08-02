@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 // import { useGoogleMap } from "@react-google-maps/api";
 
-interface IBounds {
+export interface IBounds {
   sw: {
     lat?: number;
     lng?: number;
