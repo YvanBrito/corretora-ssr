@@ -103,10 +103,12 @@ interface IPosition {
   lng: number;
 }
 
-export async function getStaticProps() {
-  const rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
-  const properties: IProperty[] = JSON.parse(rawdata);
-  const propertiesMapped: IPropertyMapped[] = propertyMapper(properties);
+export async function getServerSideProps() {
+  let properties: IProperty[] = await fetch("http://localhost:3000/search")
+    .then((response) => response.json())
+    .then((json) => json.properties)
+    .catch((err) => console.log(err));
+  const propertiesMapped: IPropertyMapped[] = propertyMapper(properties || []);
   return {
     props: {
       propertiesMapped,
@@ -127,28 +129,36 @@ export default function Search({ propertiesMapped }: SearchProps) {
     lng: Number(router.query.lng || 0),
   });
 
-  const clickSubmit = () => {
-    setShowModal(false);
+  const [bounds, setBounds] = useState<IBounds>();
+
+  const clickSubmit = async () => {
+    const propertyTypeParams = filterParams.propertyType.reduce(
+      (previousValue, currentValue, currentIndex) =>
+        previousValue +
+        `${currentIndex === 0 ? "" : "&"}propertyType=` +
+        currentValue,
+      ""
+    );
+
     setIsLoading(true);
-    setTimeout(() => {
-      const newPropertiesFiltered = propertiesMapped.filter((p) => {
-        if (filterParams.propertyType.length > 0) {
-          return (
-            filterParams.propertyType.filter(
-              (type: string) => p.type === typeMap.get(type)
-            ).length > 0
-          );
-        } else {
-          return p;
-        }
-      });
-      setPropertiesFiltered(newPropertiesFiltered);
-      setIsLoading(false);
-    }, 2000);
-    // Router.push(`/busca?${queryString}`);
+
+    let properties: IProperty[] = await fetch(
+      `http://localhost:3000/filter?swlat=${bounds?.sw.lat}&swlng=${bounds?.sw.lng}&nelat=${bounds?.ne.lat}&nelng=${bounds?.ne.lng}&${propertyTypeParams}`
+    )
+      .then((response) => response.json())
+      .then((json) => json.properties)
+      .catch((err) => console.log(err));
+
+    setIsLoading(false);
+
+    const propertiesMapped: IPropertyMapped[] = propertyMapper(
+      properties || []
+    );
+    setPropertiesFiltered(propertiesMapped);
   };
   const onChangeMapBounds = ({ sw, ne }: IBounds) => {
     setIsLoading(true);
+    setBounds({ sw, ne });
     setTimeout(() => {
       const newPropertiesFiltered = propertiesMapped.filter((p) => {
         if (
