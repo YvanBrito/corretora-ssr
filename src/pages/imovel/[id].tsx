@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Icon from "@fortawesome/free-solid-svg-icons";
-import fs from "fs";
 import Head from "next/head";
 import Image from "next/image";
 import { ReactElement, useEffect, useState } from "react";
@@ -23,31 +22,20 @@ interface PropertyProps {
   property: IPropertyMapped;
 }
 
-export async function getStaticPaths() {
-  let rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
-  let properties: IProperty[] = JSON.parse(rawdata);
-  const paths = properties.map(({ id }: IProperty) => ({
-    params: {
-      id: id.toString(),
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }: PropertyParams) {
-  let rawdata = fs.readFileSync(`${process.cwd()}/imoveis.json`, "utf8");
-  let properties: IProperty[] = JSON.parse(rawdata);
-  const propertiesMapped: IPropertyMapped[] = propertyMapper(properties);
-  const property = propertiesMapped.find(
-    ({ id }: IPropertyMapped) => id.toString() === params.id
+export async function getServerSideProps(context: any) {
+  const property: IProperty = await fetch(
+    `http://localhost:3000/property/${context.params.id}`
+  )
+    .then((response) => response.json())
+    .then((json) => json.property)
+    .catch((err) => console.log(err));
+  const propertiesMapped: IPropertyMapped = propertyMapper(
+    property,
+    context.params
   );
   return {
     props: {
-      property,
+      property: propertiesMapped,
     },
   };
 }

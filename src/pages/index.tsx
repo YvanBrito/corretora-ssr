@@ -7,20 +7,6 @@ import Router from "next/router";
 import Layout from "../components/Layout";
 import Head from "next/head";
 
-async function initMSW() {
-  if (process.env.NODE_ENV === "development") {
-    if (typeof window === "undefined") {
-      const { server } = await import("../mocks/server");
-      server.listen();
-    } else {
-      const { worker } = await import("../mocks/browser");
-      worker.start();
-    }
-  }
-}
-
-initMSW();
-
 export default function Home() {
   const [checked, setChecked] = useState<"buy" | "rent">("rent");
   const [inputValue, setInputValue] = useState<string>("");
@@ -99,6 +85,7 @@ export default function Home() {
                 name="propertyType"
                 id="selectEstateType"
               >
+                <option value="all">Todos</option>
                 <option value="house">Casa</option>
                 <option value="apartment">Apartamento</option>
               </select>

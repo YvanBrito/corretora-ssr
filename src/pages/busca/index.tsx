@@ -8,7 +8,7 @@ import Card from "../../components/Card";
 import Modal from "../../components/Modal";
 import LoadingCard from "../../components/LoadingCard";
 import Map, { IBounds } from "../../components/Map";
-import { propertyMapper, typeMap } from "../../utils/propertyMapper";
+import { propertiesMapper, typeMap } from "../../utils/propertyMapper";
 import { Marker, MarkerClusterer } from "@react-google-maps/api";
 
 export interface IProperty {
@@ -102,20 +102,7 @@ interface IPosition {
   lat: number;
   lng: number;
 }
-
-export async function getServerSideProps() {
-  let properties: IProperty[] = await fetch("http://localhost:3000/search")
-    .then((response) => response.json())
-    .then((json) => json.properties)
-    .catch((err) => console.log(err));
-  const propertiesMapped: IPropertyMapped[] = propertyMapper(properties || []);
-  return {
-    props: {
-      propertiesMapped,
-    },
-  };
-}
-export default function Search({ propertiesMapped }: SearchProps) {
+export default function Search() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [propertiesFiltered, setPropertiesFiltered] = useState<
@@ -124,14 +111,11 @@ export default function Search({ propertiesMapped }: SearchProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [filterParams, setFilterParams] =
     useState<IFilterParams>(defaultParams);
-  const [center, setCenter] = useState<IPosition>({
-    lat: Number(router.query.lat || 0),
-    lng: Number(router.query.lng || 0),
-  });
+  const [center, setCenter] = useState<IPosition>();
 
   const [bounds, setBounds] = useState<IBounds>();
 
-  const clickSubmit = async () => {
+  const searchProperties = async () => {
     const propertyTypeParams = filterParams.propertyType.reduce(
       (previousValue, currentValue, currentIndex) =>
         previousValue +
@@ -151,28 +135,10 @@ export default function Search({ propertiesMapped }: SearchProps) {
 
     setIsLoading(false);
 
-    const propertiesMapped: IPropertyMapped[] = propertyMapper(
+    const propertiesMapped: IPropertyMapped[] = propertiesMapper(
       properties || []
     );
     setPropertiesFiltered(propertiesMapped);
-  };
-  const onChangeMapBounds = ({ sw, ne }: IBounds) => {
-    setIsLoading(true);
-    setBounds({ sw, ne });
-    setTimeout(() => {
-      const newPropertiesFiltered = propertiesMapped.filter((p) => {
-        if (
-          p.lat > (sw.lat || -Infinity) &&
-          p.lat < (ne.lat || Infinity) &&
-          p.lng > (sw.lng || -Infinity) &&
-          p.lng < (ne.lng || Infinity)
-        ) {
-          return p;
-        }
-      });
-      setPropertiesFiltered(newPropertiesFiltered);
-      setIsLoading(false);
-    }, 2000);
   };
 
   const changePropertyType = (e: any) => {
@@ -193,12 +159,19 @@ export default function Search({ propertiesMapped }: SearchProps) {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setPropertiesFiltered(propertiesMapped);
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+    if (!router.isReady) return;
+
+    setCenter({
+      lat: Number(router.query.lat),
+      lng: Number(router.query.lng),
+    });
+  }, [router.isReady]);
+
+  useEffect(() => {
+    if (bounds?.ne.lat && bounds?.sw.lat) {
+      searchProperties();
+    }
+  }, [bounds]);
 
   return (
     <>
@@ -288,7 +261,7 @@ export default function Search({ propertiesMapped }: SearchProps) {
               >
                 Limpar filtros
               </button>
-              <button onClick={clickSubmit} className="btn-primary">
+              <button onClick={searchProperties} className="btn-primary">
                 Filtrar
               </button>
             </div>
@@ -329,14 +302,14 @@ export default function Search({ propertiesMapped }: SearchProps) {
           </div>
         </section>
         <section className="map-side">
-          <Map center={center} getBounds={onChangeMapBounds}>
-            <>
-              <MarkerClusterer
-                options={{
-                  imagePath:
-                    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m", // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
-                }}
-              >
+          {center && propertiesFiltered ? (
+            <Map
+              center={center}
+              getBounds={({ sw, ne }: IBounds) => {
+                setBounds({ sw, ne });
+              }}
+            >
+              <MarkerClusterer>
                 {(clusterer) => (
                   <>
                     {propertiesFiltered.map((p, index) => (
@@ -349,14 +322,10 @@ export default function Search({ propertiesMapped }: SearchProps) {
                   </>
                 )}
               </MarkerClusterer>
-              {/* {propertiesFiltered?.map((property, index) => (
-                <Marker
-                  key={index}
-                  position={{ lat: property.lat, lng: property.lng }}
-                />
-              ))} */}
-            </>
-          </Map>
+            </Map>
+          ) : (
+            <>Loading...</>
+          )}
         </section>
       </div>
     </>

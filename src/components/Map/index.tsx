@@ -47,6 +47,7 @@ function Map({ center, children, getBounds }: IMapProps) {
     };
     const bounds = new window.google.maps.LatLngBounds(sw, ne);
     map.fitBounds(bounds);
+    getBoundsOnMap();
     setMap(map);
   }, []);
 
