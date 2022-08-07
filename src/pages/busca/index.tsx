@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useState } from "react";
-import fs from "fs";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";

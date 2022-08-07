@@ -7,6 +7,8 @@ import Router from "next/router";
 import Layout from "../components/Layout";
 import Head from "next/head";
 
+import * as S from "./home.styles";
+
 export default function Home() {
   const [checked, setChecked] = useState<"buy" | "rent">("rent");
   const [inputValue, setInputValue] = useState<string>("");
@@ -49,11 +51,11 @@ export default function Home() {
       <Head>
         <title>Corretora - Home</title>
       </Head>
-      <section className="main-section">
-        <div className="container">
-          <h1 className="main-title">Garanta já seu imóvel</h1>
-          <form onSubmit={clickSubmit} id="searchForm" className="home-form">
-            <div className="acquisition-types">
+      <S.MainSection>
+        <S.Container>
+          <S.MainTitle>Garanta já seu imóvel</S.MainTitle>
+          <S.HomeForm onSubmit={clickSubmit} id="searchForm">
+            <S.AcquisitionTypes>
               <div>
                 <input
                   type="radio"
@@ -78,17 +80,13 @@ export default function Home() {
                 <label htmlFor="buy">Comprar</label>
                 <br />
               </div>
-            </div>
-            <div className="bottom-search-field">
-              <select
-                className="select-input"
-                name="propertyType"
-                id="selectEstateType"
-              >
+            </S.AcquisitionTypes>
+            <S.BottomSearchField>
+              <S.SelectInput name="propertyType" id="selectEstateType">
                 <option value="all">Todos</option>
                 <option value="house">Casa</option>
                 <option value="apartment">Apartamento</option>
-              </select>
+              </S.SelectInput>
               <PlacesAutocomplete
                 value={inputValue}
                 onChange={(address) => setInputValue(address)}
@@ -101,11 +99,10 @@ export default function Home() {
                   loading,
                 }) => (
                   <div>
-                    <input
+                    <S.TextInputHome
                       {...getInputProps({
                         placeholder: "Procurar lugar...",
                       })}
-                      className="text-input text-input--home"
                       type="text"
                       name="location"
                       id="location"
@@ -136,13 +133,11 @@ export default function Home() {
                   </div>
                 )}
               </PlacesAutocomplete>
-              <button type="submit" className="btn-primary">
-                Pesquisar
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
+              <S.BtnPrimary type="submit">Pesquisar</S.BtnPrimary>
+            </S.BottomSearchField>
+          </S.HomeForm>
+        </S.Container>
+      </S.MainSection>
     </>
   );
 }

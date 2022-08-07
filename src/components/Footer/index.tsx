@@ -1,7 +1,9 @@
+import * as S from "./styles";
+
 export default function MyFooter() {
   return (
-    <footer className="footer">
+    <S.Footer>
       <p>Corretora&reg; Todos os direitos reservados</p>
-    </footer>
+    </S.Footer>
   );
 }

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useState } from "react";
 import Modal from "../Modal";
 
+import * as S from "./styles";
+
 export default function MyHeader() {
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -28,13 +30,13 @@ export default function MyHeader() {
     }
   };
   return (
-    <header className="header">
+    <S.Header>
       <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
         <p>Login</p>
       </Modal>
       <div></div>
-      <nav className="nav-menu">
-        <ul className="menu-list">
+      <S.NavMenu>
+        <S.MenuList>
           <li>
             <Link href="/">Home</Link>
           </li>
@@ -43,8 +45,8 @@ export default function MyHeader() {
               Login
             </a>
           </li>
-        </ul>
-      </nav>
-    </header>
+        </S.MenuList>
+      </S.NavMenu>
+    </S.Header>
   );
 }
