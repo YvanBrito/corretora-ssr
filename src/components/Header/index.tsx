@@ -41,7 +41,7 @@ export default function MyHeader() {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <a onClick={testLogin} href="#">
+            <a onClick={() => setShowModal(true)} href="#">
               Login
             </a>
           </li>

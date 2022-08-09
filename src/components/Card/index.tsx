@@ -1,6 +1,10 @@
 import { useState } from "react";
 import Router from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as Icon from "@fortawesome/free-solid-svg-icons";
 import { IPropertyMapped } from "../../pages/busca";
+
+import * as S from "./styles";
 
 interface CardProps {
   property: IPropertyMapped;
@@ -14,30 +18,24 @@ export default function Card({ property }: CardProps) {
   };
 
   return (
-    <div
-      onClick={clickSubmit}
-      key={property.address.streetName}
-      className="card"
-    >
-      <div className="card-details">
-        <div
+    <S.CardWrapper onClick={clickSubmit} key={property.address.streetName}>
+      <S.CardDetails>
+        <S.CardDetailsTop
           style={{
             backgroundImage: `url("/assets/imoveis/${property.images[imgSelected]}")`,
           }}
-          className="card-details-top"
         >
-          <div className="interactables">
-            <div className="side">
-              <div
+          <S.Interectables>
+            <S.Side>
+              <S.SideControllersLeft
                 onClick={(e) => {
                   e.stopPropagation();
                   setImgSelected((oldState) =>
                     oldState > 0 ? --oldState : oldState
                   );
                 }}
-                className="side-controllers side-controllers-left"
-              ></div>
-              <div
+              ></S.SideControllersLeft>
+              <S.SideControllersRight
                 onClick={(e) => {
                   e.stopPropagation();
                   setImgSelected((oldState) =>
@@ -46,9 +44,8 @@ export default function Card({ property }: CardProps) {
                       : oldState
                   );
                 }}
-                className="side-controllers side-controllers-right"
-              ></div>
-            </div>
+              ></S.SideControllersRight>
+            </S.Side>
             <div>
               {property.images.map(
                 (i, index) =>
@@ -66,33 +63,31 @@ export default function Card({ property }: CardProps) {
                   )
               )}
             </div>
-          </div>
-        </div>
-        <div className="card-details-bottom">
+          </S.Interectables>
+        </S.CardDetailsTop>
+        <S.CardDetailsBottom>
           <span className="property-type">{property.type}</span>
           <h3>{property.address.streetName}</h3>
           <span className="district">
             {property.address.district}, {property.address.city}
           </span>
-          <div className="card-details-basic-info">
+          <div className="basic-info">
             <span>
-              <i className="fa fa-arrows-h" aria-hidden="true"></i>
-              {property.area} m<sup>2</sup>
+              <FontAwesomeIcon width={20} icon={Icon.faRuler} />{" "}
+              {" " + property.area} m<sup>2</sup>
             </span>
             <span>
-              <i className="fa fa-bed" aria-hidden="true"></i>
-              {property.bedroomsQty} quartos
+              <FontAwesomeIcon width={20} icon={Icon.faBed} />{" "}
+              {" " + property.bedroomsQty} quartos
             </span>
           </div>
-          <div className="card-details-price">
+          <div className="price">
             <span>Aluguel</span>
             <span>{property.rentPrice}</span>
-            <div className="card-details-price-total">
-              Total {property.totalPrice}
-            </div>
+            <div className="total">Total {property.totalPrice}</div>
           </div>
-        </div>
-      </div>
-    </div>
+        </S.CardDetailsBottom>
+      </S.CardDetails>
+    </S.CardWrapper>
   );
 }

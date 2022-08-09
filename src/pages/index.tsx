@@ -1,11 +1,11 @@
-import { FormEvent, ReactElement, useState } from "react";
+import React, { FormEvent, ReactElement, useState } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
 import Router from "next/router";
-import Layout from "../components/Layout";
 import Head from "next/head";
+import Layout from "../components/Layout";
 
 import * as S from "./home.styles";
 

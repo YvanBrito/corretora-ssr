@@ -1,5 +1,6 @@
 import React, { CSSProperties } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import Script from "next/script";
 // import { useGoogleMap } from "@react-google-maps/api";
 
 export interface IBounds {
@@ -70,17 +71,19 @@ function Map({ center, children, getBounds }: IMapProps) {
   };
 
   return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-      onZoomChanged={getBoundsOnMap}
-      onDragEnd={getBoundsOnMap}
-    >
-      {/* Child components, such as markers, info windows, etc. */}
-      <>{children}</>
-    </GoogleMap>
+    <>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        onZoomChanged={getBoundsOnMap}
+        onDragEnd={getBoundsOnMap}
+      >
+        {/* Child components, such as markers, info windows, etc. */}
+        <>{children}</>
+      </GoogleMap>
+    </>
   ) : (
     <></>
   );

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as Icon from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
 import Image from "next/image";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, Suspense, useEffect, useState } from "react";
 import Carousel from "../../components/Carousel";
 import Layout from "../../components/Layout";
 import Modal from "../../components/Modal";
@@ -11,6 +11,8 @@ import { IProperty, IPropertyMapped } from "../busca";
 import ImmersiveCam from "../../components/ImmersiveCam";
 import Map from "../../components/Map";
 import { Marker } from "@react-google-maps/api";
+
+import * as S from "./styles";
 
 interface PropertyParams {
   params: {
@@ -50,8 +52,6 @@ export default function Property({ property }: PropertyProps) {
     switch (preview) {
       case 0:
         return <Carousel images={property.images} />;
-      case 1:
-        return <div>Teste</div>;
       case 2:
         return (
           <Map center={{ lat: property.lat, lng: property.lng }}>
@@ -87,16 +87,13 @@ export default function Property({ property }: PropertyProps) {
         openModal={showImmersiveCam}
         handleClose={() => setShowImmersiveCam(false)}
       >
-        <button
-          className="close-immersive"
-          onClick={() => setShowImmersiveCam(false)}
-        >
+        <S.CloseImmersiveBtn onClick={() => setShowImmersiveCam(false)}>
           Fechar
-        </button>
+        </S.CloseImmersiveBtn>
         <ImmersiveCam />
       </Modal>
       <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
-        <div className="actionCard">
+        <S.ActionCard>
           <h3>Imóvel concorrido</h3>
           <span>Este imóvel tem altas chances de ser alugado logo</span>
           <div className="separator"></div>
@@ -129,10 +126,10 @@ export default function Property({ property }: PropertyProps) {
               </tr>
             </tbody>
           </table>
-        </div>
+        </S.ActionCard>
       </Modal>
       <section className="imovel-section">
-        <div className="top">
+        <S.Top>
           <div className="content">
             <div className="title">
               <span className="main">
@@ -155,9 +152,9 @@ export default function Property({ property }: PropertyProps) {
               </div>
             </div>
           </div>
-        </div>
-        <div className="preview">{previewToRender()}</div>
-        <div className="bottom">
+        </S.Top>
+        <S.Preview>{previewToRender()}</S.Preview>
+        <S.Bottom>
           <div className="content">
             <div className="btn-preview-group">
               <button onClick={() => setPreview(0)}>Fotos</button>
@@ -237,7 +234,7 @@ export default function Property({ property }: PropertyProps) {
               <p>{property.description}</p>
             </div>
           </div>
-        </div>
+        </S.Bottom>
       </section>
     </>
   );

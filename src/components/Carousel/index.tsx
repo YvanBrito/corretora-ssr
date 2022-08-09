@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 
+import * as S from "./styles";
+
 interface CardProps {
   images: string[];
 }
@@ -8,40 +10,34 @@ interface CardProps {
 export default function Carousel({ images }: CardProps) {
   const [selectedImg, setSelectedImg] = useState<number>(0);
   return (
-    <div className="carousel">
-      <div
+    <S.Carousel>
+      <S.SideControllersLeft
         onClick={(e) => {
           e.stopPropagation();
           setSelectedImg((oldState) => (oldState > 0 ? --oldState : oldState));
         }}
-        className="side-controllers side-controllers-left"
-      ></div>
-      <div className="showcase">
-        <div
+      ></S.SideControllersLeft>
+      <S.Showcase>
+        <S.Esteira
           style={{
             transform: `translateX(calc(${-34 * selectedImg}rem))`,
           }}
-          className="esteira"
         >
           {images.map((img, index) => (
-            <div
-              key={index}
-              className={`frame ${selectedImg === index && "frame-selected"}`}
-            >
+            <S.Frame isSelected={selectedImg === index} key={index}>
               <Image layout="fill" alt="image" src={`/assets/imoveis/${img}`} />
-            </div>
+            </S.Frame>
           ))}
-        </div>
-      </div>
-      <div
+        </S.Esteira>
+      </S.Showcase>
+      <S.SideControllersRight
         onClick={(e) => {
           e.stopPropagation();
           setSelectedImg((oldState) =>
             oldState < images.length - 1 ? ++oldState : oldState
           );
         }}
-        className="side-controllers side-controllers-right"
-      ></div>
-    </div>
+      ></S.SideControllersRight>
+    </S.Carousel>
   );
 }

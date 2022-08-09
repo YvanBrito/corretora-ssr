@@ -12,6 +12,8 @@ import {
 } from "@react-three/fiber";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+import * as S from "./styles";
+
 extend({ OrbitControls });
 
 declare global {
@@ -56,7 +58,7 @@ function Dome() {
 }
 export default function ImmersiveCam() {
   return (
-    <div className="immersive">
+    <S.ImmersiveCam>
       <Canvas camera={{ position: [0, 0, 0.1] }}>
         <Controls
           enableZoom={false}
@@ -69,6 +71,6 @@ export default function ImmersiveCam() {
           <Dome />
         </Suspense>
       </Canvas>
-    </div>
+    </S.ImmersiveCam>
   );
 }

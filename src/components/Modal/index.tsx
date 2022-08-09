@@ -1,4 +1,5 @@
 import { ReactNode, useCallback, useEffect, useState } from "react";
+import * as S from "./styles";
 
 interface ModalProps {
   children: ReactNode;
@@ -35,15 +36,8 @@ export default function Modal({
 
   return (
     <>
-      <div
-        className={`filter-modal ${showModal ? "slide-bottom" : "slide-top"}`}
-      >
-        {children}
-      </div>
-      <div
-        className={`overlay ${showModal ? "fade-in" : "fade-out"}`}
-        onClick={close}
-      ></div>
+      <S.Modal showModal={showModal}>{children}</S.Modal>
+      <S.Overlay showModal={showModal} onClick={close}></S.Overlay>
     </>
   );
 }

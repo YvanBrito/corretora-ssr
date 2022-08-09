@@ -10,6 +10,8 @@ import Map, { IBounds } from "../../components/Map";
 import { propertiesMapper, typeMap } from "../../utils/propertyMapper";
 import { Marker, MarkerClusterer } from "@react-google-maps/api";
 
+import * as S from "./styles";
+
 export interface IProperty {
   id: number;
   createdAt: string;
@@ -177,10 +179,10 @@ export default function Search() {
       <Head>
         <title>Corretora - Busca</title>
       </Head>
-      <div className="main-search-content-size">
+      <S.Wrapper>
         <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
-          <div className="modal-wrapper">
-            <div className="modal-tabs">
+          <S.ModalWrapper>
+            <S.ModalTabs>
               <input
                 type="radio"
                 checked={filterParams.acquisitionType === "rent"}
@@ -210,14 +212,14 @@ export default function Search() {
                 }
               />
               <label htmlFor="buy">Comprar</label>
-            </div>
-            <div className="filter-wrapper">
+            </S.ModalTabs>
+            <S.FilterWrapper>
               {filterParams.acquisitionType === "rent" ? (
                 <>
                   <h3>Tipo de imóvel</h3>
-                  <div className="property-type-inputs">
+                  <S.PropertyTypeInputs>
                     {Array.from(typeMap.keys()).map((type) => (
-                      <div key={type} className="input-radio">
+                      <S.InputRadio key={type}>
                         <input
                           type="radio"
                           checked={filterParams.propertyType.includes(type)}
@@ -227,16 +229,16 @@ export default function Search() {
                           onClick={changePropertyType}
                         />
                         <label htmlFor={type}>{typeMap.get(type)}</label>
-                      </div>
+                      </S.InputRadio>
                     ))}
-                  </div>
+                  </S.PropertyTypeInputs>
                 </>
               ) : (
                 <>
                   <h3>Tipo de imóvel</h3>
-                  <div className="property-type-inputs">
+                  <S.PropertyTypeInputs>
                     {Array.from(typeMap.keys()).map((type) => (
-                      <div key={type} className="input-radio">
+                      <S.InputRadio key={type}>
                         <input
                           type="radio"
                           checked={filterParams.propertyType.includes(type)}
@@ -246,28 +248,25 @@ export default function Search() {
                           onClick={changePropertyType}
                         />
                         <label htmlFor={type}>{typeMap.get(type)}</label>
-                      </div>
+                      </S.InputRadio>
                     ))}
-                  </div>
+                  </S.PropertyTypeInputs>
                 </>
               )}
-            </div>
-            <div className="modal-footer">
-              <button
+            </S.FilterWrapper>
+            <S.ModalFooter>
+              <S.ClearFilterBtn
                 type="button"
                 onClick={() => setFilterParams(defaultParams)}
-                className="btn-secondary"
               >
                 Limpar filtros
-              </button>
-              <button onClick={searchProperties} className="btn-primary">
-                Filtrar
-              </button>
-            </div>
-          </div>
+              </S.ClearFilterBtn>
+              <S.ModalBtn onClick={searchProperties}>Filtrar</S.ModalBtn>
+            </S.ModalFooter>
+          </S.ModalWrapper>
         </Modal>
-        <section className="shelf-search">
-          <div className="header-shelf-search">
+        <S.ShelfSearch>
+          <S.HeaderShelfSearch>
             <nav>
               <ul>
                 <li>
@@ -277,11 +276,11 @@ export default function Search() {
                 <li>{router.query.location}</li>
               </ul>
             </nav>
-            <button onClick={() => setShowModal(true)} className="btn-filter">
+            <S.FilterBtn onClick={() => setShowModal(true)}>
               Filtrar
-            </button>
-          </div>
-          <div className="shelf">
+            </S.FilterBtn>
+          </S.HeaderShelfSearch>
+          <S.Shelf>
             {isLoading ? (
               <>
                 <LoadingCard />
@@ -298,9 +297,9 @@ export default function Search() {
                 ))}
               </>
             )}
-          </div>
-        </section>
-        <section className="map-side">
+          </S.Shelf>
+        </S.ShelfSearch>
+        <S.MapSide>
           {center && propertiesFiltered ? (
             <Map
               center={center}
@@ -325,8 +324,8 @@ export default function Search() {
           ) : (
             <>Loading...</>
           )}
-        </section>
-      </div>
+        </S.MapSide>
+      </S.Wrapper>
     </>
   );
 }
