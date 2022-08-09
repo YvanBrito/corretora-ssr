@@ -26,7 +26,7 @@ interface IMapProps {
 function Map({ center, children, getBounds }: IMapProps) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyBEtW0PTowEOEdwSD-FwodQ0Ig_l_-Jt4c",
+    googleMapsApiKey: `${process.env.GOOGLE_API_KEY}`,
   });
 
   const containerStyle: CSSProperties = {
