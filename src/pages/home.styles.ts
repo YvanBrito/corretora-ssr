@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const MainSection = styled.section`
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  background-color: #ddd;
+  height: 100%;
 `;
 
 export const Container = styled.div`
@@ -32,7 +33,7 @@ export const AcquisitionTypes = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
+  background-color: ${({ theme }) => theme.palette.background.main};
   padding: 2rem;
   width: 20rem;
   border-top-left-radius: 0.6rem;
@@ -47,7 +48,7 @@ export const BottomSearchField = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
+  background-color: ${({ theme }) => theme.palette.background.main};
   width: 70vw;
   border-radius: 0.6rem;
   padding: 2rem;
@@ -60,7 +61,7 @@ export const BottomSearchField = styled.div`
 `;
 
 export const SelectInput = styled.select`
-  border: 2px solid ${({ theme }) => theme.palette.secondary.main};
+  border: 1px solid ${({ theme }) => theme.palette.border};
   border-radius: 3rem;
   padding: 1.5rem;
 `;
@@ -69,7 +70,7 @@ export const TextInput = styled.input`
   width: 80%;
   height: 2.5rem;
   padding: 1rem;
-  border: 2px solid ${({ theme }) => theme.palette.secondary.main};
+  border: 1px solid ${({ theme }) => theme.palette.secondary.main};
   border-radius: 3rem;
 
   @media only screen and (min-width: 1280px) {
@@ -86,26 +87,34 @@ export const TextInput = styled.input`
   }
 `;
 
-export const TextInputHome = styled.input`
-  width: 80%;
-  height: 2.5rem;
-  padding: 1rem;
-  border: 2px solid ${({ theme }) => theme.palette.secondary.main};
-  border-radius: 3rem;
+export const TextInputHome = styled.div`
+  width: 70%;
   margin: 2rem 4rem;
+  input {
+    width: 100%;
+    height: 4.5rem;
+    padding: 0 1rem;
+    border: 1px solid ${({ theme }) => theme.palette.border};
+    border-radius: 3rem;
+    margin: 0;
+  }
 `;
 
 export const BtnPrimary = styled.button`
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.palette.primary.main};
   padding: 1.5rem;
   border: none;
   border-radius: 3rem;
   width: 13rem;
+  height: 4.5rem;
   transition: cubic-bezier(0.4, 0, 0.2, 1) all 300ms;
   &:hover {
-    background-color: ${({ theme }) => theme.palette.secondary.main};
+    background-color: ${({ theme }) => theme.palette.primary.highlight};
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
       0 8px 10px -6px rgb(0 0 0 / 0.1);
     transform: translateY(-1px);
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.palette.primary.pressed};
   }
 `;

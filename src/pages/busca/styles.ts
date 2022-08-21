@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
+  height: 100%;
 `;
 
 export const ShelfSearch = styled.section`
   width: 100vw;
-  border-right: 1px solid ${({ theme }) => theme.palette.primary.main};
+  border-right: 1px solid ${({ theme }) => theme.palette.border};
 `;
 
 export const HeaderShelfSearch = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.palette.primary.main};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.border};
   padding: 2rem;
   ul {
     display: flex;

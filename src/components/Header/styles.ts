@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
-const bggray400 = "#9ca3af";
-
 export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   padding: 1rem 4rem;
-  background-color: ${bggray400};
+  background-color: ${({ theme }) => theme.palette.common.white};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.border};
 `;
 
 export const NavMenu = styled.nav`

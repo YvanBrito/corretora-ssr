@@ -98,8 +98,8 @@ export default function Home() {
                   getSuggestionItemProps,
                   loading,
                 }) => (
-                  <div>
-                    <S.TextInputHome
+                  <S.TextInputHome>
+                    <input
                       {...getInputProps({
                         placeholder: "Procurar lugar...",
                       })}
@@ -107,7 +107,10 @@ export default function Home() {
                       name="location"
                       id="location"
                     />
-                    <div className="autocomplete-dropdown-container">
+                    <div
+                      style={{ position: "absolute" }}
+                      className="autocomplete-dropdown-container"
+                    >
                       {loading && <div>Loading...</div>}
                       {suggestions.map((suggestion, index) => {
                         const className = suggestion.active
@@ -130,7 +133,7 @@ export default function Home() {
                         );
                       })}
                     </div>
-                  </div>
+                  </S.TextInputHome>
                 )}
               </PlacesAutocomplete>
               <S.BtnPrimary type="submit">Pesquisar</S.BtnPrimary>

@@ -5,7 +5,7 @@ export const CardWrapper = styled.div`
   width: 30rem;
   background-color: white;
   margin: 0 auto;
-  border: 1px solid ${({ theme }) => theme.palette.secondary.main};
+  border: 1px solid ${({ theme }) => theme.palette.border};
   border-radius: 1.5rem;
   overflow: hidden;
   text-decoration: none;
