@@ -10,7 +10,7 @@ import Map, { IBounds } from "../../components/Map";
 import { propertiesMapper, typeMap } from "../../utils/propertyMapper";
 import { Marker, MarkerClusterer } from "@react-google-maps/api";
 
-import * as S from "./styles";
+import S from "../../styles/pages/busca";
 
 export interface IProperty {
   id: number;

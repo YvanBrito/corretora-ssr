@@ -12,7 +12,7 @@ import ImmersiveCam from "../../components/ImmersiveCam";
 import Map from "../../components/Map";
 import { Marker } from "@react-google-maps/api";
 
-import * as S from "./styles";
+import S from "../../styles/pages/imovel";
 
 interface PropertyParams {
   params: {

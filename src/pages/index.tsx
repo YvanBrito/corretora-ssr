@@ -7,7 +7,7 @@ import Router from "next/router";
 import Head from "next/head";
 import Layout from "../components/Layout";
 
-import * as S from "./home.styles";
+import S from "../styles/pages/home";
 
 export default function Home() {
   const [checked, setChecked] = useState<"buy" | "rent">("rent");
@@ -52,34 +52,31 @@ export default function Home() {
         <title>Corretora - Home</title>
       </Head>
       <S.MainSection>
+        <S.BackgroundFront />
         <S.Container>
           <S.MainTitle>Garanta já seu imóvel</S.MainTitle>
           <S.HomeForm onSubmit={clickSubmit} id="searchForm">
             <S.AcquisitionTypes>
-              <div>
-                <input
-                  type="radio"
-                  checked={checked === "rent"}
-                  id="rent"
-                  name="acquisitionType"
-                  value="rent"
-                  onChange={() => setChecked("rent")}
-                />
-                <label htmlFor="rent">Alugar</label>
-                <br />
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  checked={checked === "buy"}
-                  id="buy"
-                  name="acquisitionType"
-                  value="buy"
-                  onChange={() => setChecked("buy")}
-                />
-                <label htmlFor="buy">Comprar</label>
-                <br />
-              </div>
+              <input
+                type="radio"
+                checked={checked === "rent"}
+                id="rent"
+                name="acquisitionType"
+                value="rent"
+                onChange={() => setChecked("rent")}
+              />
+              <label htmlFor="rent">Alugar</label>
+              <br />
+              <input
+                type="radio"
+                checked={checked === "buy"}
+                id="buy"
+                name="acquisitionType"
+                value="buy"
+                onChange={() => setChecked("buy")}
+              />
+              <label htmlFor="buy">Comprar</label>
+              <br />
             </S.AcquisitionTypes>
             <S.BottomSearchField>
               <S.SelectInput name="propertyType" id="selectEstateType">

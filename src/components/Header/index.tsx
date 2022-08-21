@@ -38,11 +38,11 @@ export default function MyHeader() {
       <S.NavMenu>
         <S.MenuList>
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/">Início</Link>
           </li>
           <li>
             <a onClick={() => setShowModal(true)} href="#">
-              Login
+              Entrar
             </a>
           </li>
         </S.MenuList>
