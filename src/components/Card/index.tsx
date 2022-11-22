@@ -6,7 +6,7 @@ import { IPropertyMapped } from "../../pages/busca";
 
 import * as S from "./styles";
 
-interface CardProps {
+export interface CardProps {
   property: IPropertyMapped;
 }
 
