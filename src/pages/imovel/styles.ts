@@ -63,6 +63,23 @@ const Bottom = styled.div`
     width: 70vw;
     margin: 0 auto;
 
+    .btn-preview-group {
+      button {
+        margin: 1rem;
+        background-color: ${({ theme }) => theme.palette.primary.main};
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: ${({ theme }) => theme.palette.primary.highlight};
+      }
+      button:active {
+        background-color: ${({ theme }) => theme.palette.primary.pressed};
+      }
+    }
+
     .top-description {
       display: flex;
       justify-content: space-between;
@@ -95,7 +112,9 @@ const Bottom = styled.div`
           justify-content: center;
           align-items: center;
           margin: 1rem 1rem;
-          background-color: ${({ theme }) => theme.palette.primary.main};
+          background-color: ${({ theme }) => theme.palette.background.main};
+          border-color: ${({ theme }) => theme.palette.primary.main};
+          border-width: 2px;
           width: 8rem;
           height: 8rem;
           border-radius: 1rem;

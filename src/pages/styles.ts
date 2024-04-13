@@ -1,31 +1,36 @@
 import styled from "styled-components";
 
 const MainSection = styled.section`
-  height: 100%;
+  height: calc(100vh - 52px - 34px);
 `;
 
 const BackgroundFront = styled.div`
-  background-image: url("/assets/front.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  /* filter: blur(3px);
-  -webkit-filter: blur(3px); */
-  height: 100%;
+  @media only screen and (min-width: 768px) {
+    background-image: url("/assets/front.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+  }
 `;
 
 const Container = styled.div`
+  position: absolute;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  padding: 2rem 2rem;
-  top: 50%;
-  left: 70%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+
+  @media only screen and (min-width: 768px) {
+    padding: 2rem 2rem;
+    left: 70%;
+    width: 25%;
+  }
 `;
 
 const MainTitle = styled.span`
@@ -41,6 +46,7 @@ const HomeForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 const AcquisitionTypes = styled.div`
@@ -50,9 +56,13 @@ const AcquisitionTypes = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.palette.background.main};
   padding: 2rem;
-  width: 20rem;
   border-top-left-radius: 0.6rem;
   border-top-right-radius: 0.6rem;
+  width: 80%;
+
+  @media only screen and (min-width: 768px) {
+    width: 20rem;
+  }
 
   @media only screen and (min-width: 1280px) {
     flex-direction: row;
@@ -64,9 +74,13 @@ const BottomSearchField = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.palette.background.main};
-  width: 20vw;
   border-radius: 0.6rem;
   padding: 2rem;
+  width: 80%;
+
+  @media only screen and (min-width: 768px) {
+    width: 20vw;
+  }
 
   @media only screen and (min-width: 1280px) {
     flex-direction: column;
@@ -116,25 +130,6 @@ const TextInputHome = styled.div`
   }
 `;
 
-const BtnPrimary = styled.button`
-  background-color: ${({ theme }) => theme.palette.primary.main};
-  padding: 1.5rem;
-  border: none;
-  border-radius: 3rem;
-  width: 100%;
-  height: 4.5rem;
-  transition: cubic-bezier(0.4, 0, 0.2, 1) all 300ms;
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.primary.highlight};
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-      0 8px 10px -6px rgb(0 0 0 / 0.1);
-    transform: translateY(-1px);
-  }
-  &:active {
-    background-color: ${({ theme }) => theme.palette.primary.pressed};
-  }
-`;
-
 const styles = {
   MainSection,
   BackgroundFront,
@@ -146,7 +141,6 @@ const styles = {
   SelectInput,
   TextInput,
   TextInputHome,
-  BtnPrimary,
 };
 
 export default styles;

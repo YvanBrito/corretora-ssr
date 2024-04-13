@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Header = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 1rem 4rem;
   background-color: ${({ theme }) => theme.palette.common.white};
   border-bottom: 1px solid ${({ theme }) => theme.palette.border};

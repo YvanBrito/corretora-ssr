@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Modal from "../Modal";
+import LoginForm from "../LoginForm";
 
 import * as S from "./styles";
 
@@ -9,7 +10,7 @@ export default function MyHeader() {
 
   const testLogin = async () => {
     try {
-      await fetch("http://localhost:3000/login", {
+      await fetch(`http://${process.env.NEXT_PUBLIC_BACKEND_API}/login`, {
         method: "POST",
         body: JSON.stringify({}),
         headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -21,7 +22,7 @@ export default function MyHeader() {
       console.error(error);
     }
     try {
-      await fetch("http://localhost:3000/user")
+      await fetch(`http://${process.env.NEXT_PUBLIC_BACKEND_API}/user`)
         .then((response) => response.json())
         .then((json) => console.log(json))
         .catch((err) => console.log("Erro de solicitação", err));
@@ -32,9 +33,8 @@ export default function MyHeader() {
   return (
     <S.Header>
       <Modal openModal={showModal} handleClose={() => setShowModal(false)}>
-        <p>Login</p>
+        <LoginForm />
       </Modal>
-      <div></div>
       <S.NavMenu>
         <S.MenuList>
           <li>

@@ -1,7 +1,7 @@
 // https://codesandbox.io/s/r3f-sky-dome-dgbmm
 
-import { Suspense, useRef } from "react";
-import * as THREE from "three";
+import { Suspense, useRef } from 'react'
+import * as THREE from 'three'
 import {
   Canvas,
   extend,
@@ -9,12 +9,12 @@ import {
   useThree,
   useLoader,
   ReactThreeFiber,
-} from "@react-three/fiber";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+} from '@react-three/fiber'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-import * as S from "./styles";
+import * as S from './styles'
 
-extend({ OrbitControls });
+extend({ OrbitControls })
 
 declare global {
   namespace JSX {
@@ -22,14 +22,14 @@ declare global {
       orbitControls: ReactThreeFiber.Object3DNode<
         OrbitControls,
         typeof OrbitControls
-      >;
+      >
     }
   }
 }
 function Controls(props: any) {
-  const { camera, gl } = useThree();
-  const ref = useRef<OrbitControls>();
-  useFrame(() => ref.current?.update());
+  const { camera, gl } = useThree()
+  const ref = useRef<OrbitControls>()
+  useFrame(() => ref.current?.update())
   return (
     <orbitControls
       ref={ref}
@@ -37,24 +37,24 @@ function Controls(props: any) {
       {...props}
       args={[camera, gl.domElement]}
     />
-  );
+  )
 }
 
 function Dome() {
   const texture = useLoader(
     THREE.TextureLoader,
-    "/assets/imoveis/immersive/download.jpg"
-  );
+    '/assets/imoveis/immersive/download.jpg',
+  )
   return (
     <mesh>
-      <sphereBufferGeometry attach="geometry" args={[500, 60, 40]} />
+      <sphereGeometry attach="geometry" args={[500, 60, 40]} />
       <meshBasicMaterial
         attach="material"
         map={texture}
         side={THREE.BackSide}
       />
     </mesh>
-  );
+  )
 }
 export default function ImmersiveCam() {
   return (
@@ -72,5 +72,5 @@ export default function ImmersiveCam() {
         </Suspense>
       </Canvas>
     </S.ImmersiveCam>
-  );
+  )
 }

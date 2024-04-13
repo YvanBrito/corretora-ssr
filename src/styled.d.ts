@@ -8,6 +8,7 @@ interface IPalette {
 declare module "styled-components" {
   export interface DefaultTheme {
     borderRadius: string;
+    fontSize: string;
     palette: {
       border: string;
       background: IPalette;
